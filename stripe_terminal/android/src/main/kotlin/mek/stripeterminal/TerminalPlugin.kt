@@ -26,10 +26,10 @@ import com.stripe.stripeterminal.external.models.SetupIntentConfiguration
 import com.stripe.stripeterminal.external.models.SetupIntentParameters
 import com.stripe.stripeterminal.external.models.TerminalException
 import com.stripe.stripeterminal.log.LogLevel
+import io.flutter.embedding.engine.FlutterJNI
 import io.flutter.embedding.engine.plugins.FlutterPlugin
 import io.flutter.embedding.engine.plugins.activity.ActivityAware
 import io.flutter.embedding.engine.plugins.activity.ActivityPluginBinding
-import io.flutter.plugin.common.BinaryMessenger
 import mek.stripeterminal.api.AllowRedisplayApi
 import mek.stripeterminal.api.CartApi
 import mek.stripeterminal.api.ConnectionConfigurationApi
@@ -62,8 +62,10 @@ import mek.stripeterminal.plugin.TerminalErrorHandler
 class TerminalPlugin : FlutterPlugin, ActivityAware {
     private lateinit var platform: TerminalPlatformPlugin
     private lateinit var discoverReadersController: DiscoverReadersControllerApi
+    private val flutterJNI: FlutterJNI = FlutterJNI()
 
     override fun onAttachedToEngine(binding: FlutterPlugin.FlutterPluginBinding) {
+        flutterJNI.attachToNative();
         val discoverReadersSubject = DiscoverReadersSubject()
         discoverReadersController = DiscoverReadersControllerApi(binding.binaryMessenger);
         discoverReadersController.setHandler(
@@ -82,6 +84,7 @@ class TerminalPlugin : FlutterPlugin, ActivityAware {
         if (Terminal.isInitialized()) platform.clean()
         discoverReadersController.removeHandler()
         TerminalPlatformApi.removeHandler()
+        flutterJNI.detachFromNativeAndReleaseResources();
     }
 
     override fun onAttachedToActivity(binding: ActivityPluginBinding) {
