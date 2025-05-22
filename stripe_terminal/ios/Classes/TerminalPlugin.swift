@@ -2,6 +2,7 @@ import Flutter
 import StripeTerminal
 import UIKit
 
+@available(iOS 14.0, *)
 public class TerminalPlugin: NSObject, FlutterPlugin, TerminalPlatformApi {
     public static func register(with registrar: FlutterPluginRegistrar) {
         let instance = TerminalPlugin(registrar.messenger())
@@ -21,6 +22,7 @@ public class TerminalPlugin: NSObject, FlutterPlugin, TerminalPlatformApi {
         self.setupDiscoverReaders()
     }
     
+    @available(iOS 14.0, *)
     public func detachFromEngine(for registrar: FlutterPluginRegistrar) {
         if (Terminal.hasTokenProvider()) { self._clean() }
         
