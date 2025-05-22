@@ -1,4 +1,3 @@
-@available(iOS 14.0, *)
 import Flutter
 import StripeTerminal
 import UIKit

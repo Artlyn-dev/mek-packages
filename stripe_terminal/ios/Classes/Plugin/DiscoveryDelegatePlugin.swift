@@ -2,6 +2,7 @@ import Foundation
 import StripeTerminal
 import Flutter
 
+@available(iOS 14.0, *)
 class DiscoveryDelegatePlugin: NSObject, DiscoveryDelegate {
     private var _sink: ControllerSink<[ReaderApi]>?
     private var _cancelable: Cancelable? = nil
@@ -16,6 +17,7 @@ class DiscoveryDelegatePlugin: NSObject, DiscoveryDelegate {
         self._readers = []
     }
     
+    @available(iOS 14.0, *)
     func terminal(_ terminal: Terminal, didUpdateDiscoveredReaders readers: [Reader]) {
         DispatchQueue.main.async {
             self._readers = readers
@@ -23,6 +25,7 @@ class DiscoveryDelegatePlugin: NSObject, DiscoveryDelegate {
         }
     }
 
+    @available(iOS 14.0, *)
     func onListen(
         _ sink: ControllerSink<[ReaderApi]>,
         _ configuration: DiscoveryConfigurationApi
